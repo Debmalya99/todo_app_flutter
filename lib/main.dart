@@ -27,8 +27,25 @@ class _TodoApp extends State<TodoApp> {
       appBar: AppBar(
         title: Text("To Do"),
       ),
-      body: Center(
-        child: Text("This is going to be a To-Do App"),
+      body: ListView(
+        padding: const EdgeInsets.all(8.0),
+        children: <Widget>[
+          Container(
+            height: 50,
+            color: Colors.teal[800],
+            child: const Center(child: Text("This is a sample event A")),
+          ),
+          Container(
+            height: 50,
+            color: Colors.teal[800],
+            child: const Center(child: Text("This is a sample event B")),
+          ),
+          Container(
+            height: 50,
+            color: Colors.teal[800],
+            child: const Center(child: Text("This is a sample event C")),
+          )
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
