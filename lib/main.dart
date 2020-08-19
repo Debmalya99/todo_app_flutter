@@ -9,9 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Todo List",
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
+      theme: ThemeData.dark(),
       home: TodoApp(),
     );
   }
@@ -39,6 +37,11 @@ class _TodoApp extends State<TodoApp> {
           BottomNavigationBarItem(
               icon: Icon(Icons.event_note), title: Text("To Remember"))
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {},
+        child: const Icon(Icons.add),
+        tooltip: "Add event",
       ),
     );
   }
