@@ -51,10 +51,15 @@ class _TodoApp extends State<TodoApp> {
     );
   }
   Widget _listItem(String text){
-    return Container(
-      height : 50,
-      color : Colors.teal[800],
-      child : Center(child : Text(text)),
+    bool checkedValue = false;
+    return CheckboxListTile(
+      title : Text(text),
+      value : checkedValue,
+      onChanged : (bool new_value){
+        setState((){
+          checkedValue = new_value;
+        });
+      },
     );
   }
 }
