@@ -30,21 +30,9 @@ class _TodoApp extends State<TodoApp> {
       body: ListView(
         padding: const EdgeInsets.all(8.0),
         children: <Widget>[
-          Container(
-            height: 50,
-            color: Colors.teal[800],
-            child: const Center(child: Text("This is a sample event A")),
-          ),
-          Container(
-            height: 50,
-            color: Colors.teal[800],
-            child: const Center(child: Text("This is a sample event B")),
-          ),
-          Container(
-            height: 50,
-            color: Colors.teal[800],
-            child: const Center(child: Text("This is a sample event C")),
-          )
+          _listItem("This is sample event 1"),
+          _listItem("This is sample event 2"),
+          _listItem("This is sample event 3"),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -60,6 +48,13 @@ class _TodoApp extends State<TodoApp> {
         child: const Icon(Icons.add),
         tooltip: "Add event",
       ),
+    );
+  }
+  Widget _listItem(String text){
+    return Container(
+      height : 50,
+      color : Colors.teal[800],
+      child : Center(child : Text(text)),
     );
   }
 }
