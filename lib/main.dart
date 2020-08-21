@@ -21,6 +21,7 @@ class TodoApp extends StatefulWidget {
 }
 
 class _TodoApp extends State<TodoApp> {
+  List<bool> _checkedValue = [];
   List<String> _todoItems = [];
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,21 @@ class _TodoApp extends State<TodoApp> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addTodoItem,
+        onPressed: (){
+          showDialog(
+            context : context,
+            builder : (context){
+              return AlertDialog(
+                content : Container(
+                  child : TextField(
+                    decoration : InputDecoration(hintText : 'Enter new event description'),
+                  ),
+                ),
+              );
+            },
+          );
+          _addTodoItem();
+        },
         child: const Icon(Icons.add),
         tooltip: "Add event",
       ),
@@ -53,6 +68,7 @@ class _TodoApp extends State<TodoApp> {
     setState(() {
       int index = _todoItems.length;
       _todoItems.add('Event ' + index.toString());
+      _checkedValue.add(false);
     });
   }
 
@@ -64,15 +80,33 @@ class _TodoApp extends State<TodoApp> {
         as an anonymous lambda, as how the individual list items will be built.
          */
       if (index < _todoItems.length) {
-        return _buildTodoItem(_todoItems[index]);
+        return _buildTodoItem(_todoItems[index],index);
       }
     });
   }
 
-  Widget _buildTodoItem(String todoItem) {
+  Widget _buildTodoItem(String todoItem,int index) {
     return Card(
       child: ListTile(
+        leading : Checkbox(
+          value : _checkedValue[index],
+          onChanged : (bool newValue){
+            setState((){
+              _checkedValue[index] = newValue;
+            });
+          },
+        ),
         title: Text(todoItem),
+        trailing : IconButton(
+          icon : Icon(Icons.close),
+          tooltip : 'Remove this event',
+          onPressed : (){
+            setState((){
+              _todoItems.removeAt(index);
+              _checkedValue.removeAt(index);
+            });
+          }
+        ),
       ),
     );
   }
