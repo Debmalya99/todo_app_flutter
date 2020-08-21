@@ -9,7 +9,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Todo List",
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        primarySwatch: Colors.indigo,
+      ),
       home: TodoApp(),
     );
   }
@@ -23,6 +25,7 @@ class TodoApp extends StatefulWidget {
 class _TodoApp extends State<TodoApp> {
   List<bool> _checkedValue = [];
   List<String> _todoItems = [];
+  TextEditingController _controller;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,20 +42,24 @@ class _TodoApp extends State<TodoApp> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           showDialog(
-            context : context,
-            builder : (context){
+            context: context,
+            builder: (context) {
               return AlertDialog(
-                content : Container(
-                  child : TextField(
-                    decoration : InputDecoration(hintText : 'Enter new event description'),
+                content: Container(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                        hintText: 'Enter new event description'),
+                    onSubmitted: (val) {
+                      _addTodoItem(val);
+                    },
                   ),
                 ),
               );
             },
           );
-          _addTodoItem();
         },
         child: const Icon(Icons.add),
         tooltip: "Add event",
@@ -60,14 +67,14 @@ class _TodoApp extends State<TodoApp> {
     );
   }
 
-  void _addTodoItem() {
+  void _addTodoItem(String eventText) {
     /*
     What this function does: This function simply adds a pregenerated todo item.
     But it does not care about any interface changes etc. Its job is to append the array that's all
      */
     setState(() {
       int index = _todoItems.length;
-      _todoItems.add('Event ' + index.toString());
+      _todoItems.add(eventText);
       _checkedValue.add(false);
     });
   }
@@ -80,33 +87,32 @@ class _TodoApp extends State<TodoApp> {
         as an anonymous lambda, as how the individual list items will be built.
          */
       if (index < _todoItems.length) {
-        return _buildTodoItem(_todoItems[index],index);
+        return _buildTodoItem(_todoItems[index], index);
       }
     });
   }
 
-  Widget _buildTodoItem(String todoItem,int index) {
+  Widget _buildTodoItem(String todoItem, int index) {
     return Card(
       child: ListTile(
-        leading : Checkbox(
-          value : _checkedValue[index],
-          onChanged : (bool newValue){
-            setState((){
+        leading: Checkbox(
+          value: _checkedValue[index],
+          onChanged: (bool newValue) {
+            setState(() {
               _checkedValue[index] = newValue;
             });
           },
         ),
         title: Text(todoItem),
-        trailing : IconButton(
-          icon : Icon(Icons.close),
-          tooltip : 'Remove this event',
-          onPressed : (){
-            setState((){
-              _todoItems.removeAt(index);
-              _checkedValue.removeAt(index);
-            });
-          }
-        ),
+        trailing: IconButton(
+            icon: Icon(Icons.close),
+            tooltip: 'Remove this event',
+            onPressed: () {
+              setState(() {
+                _todoItems.removeAt(index);
+                _checkedValue.removeAt(index);
+              });
+            }),
       ),
     );
   }
