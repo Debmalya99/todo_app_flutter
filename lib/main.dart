@@ -33,14 +33,6 @@ class _TodoApp extends State<TodoApp> {
         title: Text("To Do"),
       ),
       body: _buildTodoList(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.event_available), title: Text("To-Do")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.event_note), title: Text("To Remember"))
-        ],
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
